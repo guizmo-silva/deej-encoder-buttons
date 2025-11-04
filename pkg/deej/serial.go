@@ -228,6 +228,12 @@ func (sio *SerialIO) readLine(logger *zap.SugaredLogger, reader *bufio.Reader) c
 
 func (sio *SerialIO) handleLine(logger *zap.SugaredLogger, line string) {
 
+	// Verifica se é um comando de botão
+	if strings.HasPrefix(line, "BTN:") {
+		sio.deej.handleButtonPress(line)
+		return
+	}
+	
 	// this function receives an unsanitized line which is guaranteed to end with LF,
 	// but most lines will end with CRLF. it may also have garbage instead of
 	// deej-formatted values, so we must check for that! just ignore bad ones

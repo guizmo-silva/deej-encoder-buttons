@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"path"
 	"strings"
+	"strconv"
 	"time"
 
 	"github.com/fsnotify/fsnotify"
@@ -17,6 +18,8 @@ import (
 // as well as loading/file watching logic for deej's configuration file
 type CanonicalConfig struct {
 	SliderMapping *sliderMap
+
+	ButtonMapping map[int]string `mapstructure:"button_mapping"`
 
 	ConnectionInfo struct {
 		COMPort  string
@@ -49,6 +52,7 @@ const (
 	configType = "yaml"
 
 	configKeySliderMapping       = "slider_mapping"
+	configKeyButtonMapping 		 = "button_mapping"
 	configKeyInvertSliders       = "invert_sliders"
 	configKeyCOMPort             = "com_port"
 	configKeyBaudRate            = "baud_rate"
@@ -223,6 +227,8 @@ func (cc *CanonicalConfig) populateFromVipers() error {
 		cc.internalConfig.GetStringMapStringSlice(configKeySliderMapping),
 	)
 
+	cc.ButtonMapping = buttonMapFromConfig(cc.userConfig.GetStringMapString(configKeyButtonMapping))
+
 	// get the rest of the config fields - viper saves us a lot of effort here
 	cc.ConnectionInfo.COMPort = cc.userConfig.GetString(configKeyCOMPort)
 
@@ -242,6 +248,20 @@ func (cc *CanonicalConfig) populateFromVipers() error {
 	cc.logger.Debug("Populated config fields from vipers")
 
 	return nil
+}
+
+// buttonMapFromConfig converte o mapa de strings do viper para map[int]string
+func buttonMapFromConfig(stringMap map[string]string) map[int]string {
+	result := make(map[int]string)
+	
+	for key, value := range stringMap {
+		// Converte a chave string para int
+		if intKey, err := strconv.Atoi(key); err == nil {
+			result[intKey] = value
+		}
+	}
+	
+	return result
 }
 
 func (cc *CanonicalConfig) onConfigReloaded() {
