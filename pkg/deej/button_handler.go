@@ -47,11 +47,11 @@ func (d *Deej) executeButtonAction(action string) {
 	case "mute_master":
 		d.toggleMuteMaster()
 	case "media_play_pause":
-		d.sendMediaKey(0xB3) // VK_MEDIA_PLAY_PAUSE
+		d.mediaPlayPause()
 	case "media_next":
-		d.sendMediaKey(0xB0) // VK_MEDIA_NEXT_TRACK
+		d.mediaNext()
 	case "media_previous":
-		d.sendMediaKey(0xB1) // VK_MEDIA_PREV_TRACK
+		d.mediaPrevious()
 	default:
 		d.logger.Warnw("Unknown button action", "action", action)
 	}

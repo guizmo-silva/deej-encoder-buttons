@@ -1,0 +1,19 @@
+slider_mapping:
+  0: master
+  1: Spotify
+  2: deej.current  
+  3: Zen
+
+button_mapping:
+  0: mute_master
+  1: media_play_pause
+  2: media_previous
+  3: media_next
+
+com_port: /dev/ttyUSB0
+
+baud_rate: 9600
+
+noise_reduction: default
+
+
