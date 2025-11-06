@@ -7,38 +7,54 @@ import (
 	"os/exec"
 )
 
-// sendMediaKey envia uma tecla de mídia usando xdotool
-func (d *Deej) sendMediaKey(keyName string) {
-	cmd := exec.Command("xdotool", "key", keyName)
-	
+// toggleMuteMaster muta/desmuta o volume master usando pactl (PulseAudio)
+// Não requer permissões especiais
+func (d *Deej) toggleMuteMaster() {
+	cmd := exec.Command("pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle")
+
 	if err := cmd.Run(); err != nil {
-		d.logger.Warnw("Failed to send media key", "key", keyName, "error", err)
+		d.logger.Warnw("Failed to toggle mute", "error", err)
 		return
 	}
-	
-	d.logger.Debugw("Sent media key", "key", keyName)
-}
 
-// toggleMuteMaster muta/desmuta o volume master
-func (d *Deej) toggleMuteMaster() {
-	d.sendMediaKey("XF86AudioMute")
 	d.logger.Debug("Toggled master mute")
 }
 
-// mediaPlayPause envia play/pause
+// mediaPlayPause envia play/pause usando playerctl (MPRIS)
+// Não requer permissões especiais
 func (d *Deej) mediaPlayPause() {
-	d.sendMediaKey("XF86AudioPlay")
+	cmd := exec.Command("playerctl", "play-pause")
+
+	if err := cmd.Run(); err != nil {
+		d.logger.Warnw("Failed to send play/pause", "error", err)
+		return
+	}
+
 	d.logger.Debug("Sent play/pause")
 }
 
-// mediaNext envia próxima faixa
+// mediaNext envia próxima faixa usando playerctl (MPRIS)
+// Não requer permissões especiais
 func (d *Deej) mediaNext() {
-	d.sendMediaKey("XF86AudioNext")
+	cmd := exec.Command("playerctl", "next")
+
+	if err := cmd.Run(); err != nil {
+		d.logger.Warnw("Failed to send next", "error", err)
+		return
+	}
+
 	d.logger.Debug("Sent next track")
 }
 
-// mediaPrevious envia faixa anterior
+// mediaPrevious envia faixa anterior usando playerctl (MPRIS)
+// Não requer permissões especiais
 func (d *Deej) mediaPrevious() {
-	d.sendMediaKey("XF86AudioPrev")
+	cmd := exec.Command("playerctl", "previous")
+
+	if err := cmd.Run(); err != nil {
+		d.logger.Warnw("Failed to send previous", "error", err)
+		return
+	}
+
 	d.logger.Debug("Sent previous track")
 }

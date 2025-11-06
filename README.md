@@ -17,8 +17,8 @@ This project adds native support for rotary encoder buttons, allowing you to con
 ## 🖥️ Platform Support
 
 - ✅ **Windows** - Full support with native Windows API
-- ✅ **Linux** - Full support using xdotool
-  - **Note for Linux users:** Works best on **X11/Xorg**. On **Wayland**, you may need to grant permission the first time after each restart.
+- ✅ **Linux** - Full support using playerctl (MPRIS) and pactl (PulseAudio)
+  - **Works seamlessly on both X11 and Wayland** - no permission prompts required
 
 ## ✨ New Features
 
@@ -87,13 +87,12 @@ baud_rate: 9600
 
 ### Linux
 1. Download `deej-linux` and `config_linux.yaml` from [Releases](https://github.com/guizmo-silva/deej-encoder-buttons/releases)
-2. Rename `config_linux.yaml` to `config.yaml`
-3. Make the binary executable: `chmod +x deej-linux`
-4. Install xdotool: `sudo apt install xdotool` (Debian/Ubuntu) or `sudo dnf install xdotool` (Fedora)
-5. Edit `config.yaml` with your serial port (usually `/dev/ttyUSB0` or `/dev/ttyACM0`)
-6. Run `./deej-linux`
+2. Make the binary executable: `chmod +x deej-linux`
+3. Install playerctl: `sudo apt install playerctl` (Debian/Ubuntu) or `sudo dnf install playerctl` (Fedora)
+4. Edit `config.yaml` with your serial port (usually `/dev/ttyUSB0` or `/dev/ttyACM0`)
+5. Run `./deej-linux`
 
-**Linux Wayland users:** If you get a permission prompt on first button press after each restart, consider switching to X11/Xorg session for seamless operation.
+
 
 ## ⚠️ IMPORTANT - Arduino Not Recognized Issues
 
@@ -134,8 +133,8 @@ Este projeto adiciona suporte nativo aos botões dos rotary encoders, permitindo
 ## 🖥️ Suporte a Plataformas
 
 - ✅ **Windows** - Suporte completo com API nativa do Windows
-- ✅ **Linux** - Suporte completo usando xdotool
-  - **Nota para usuários Linux:** Funciona melhor no **X11/Xorg**. No **Wayland**, pode ser necessário conceder permissão na primeira vez após cada reinicialização.
+- ✅ **Linux** - Suporte completo usando playerctl (MPRIS) e pactl (PulseAudio)
+  - **Funciona perfeitamente tanto no X11 quanto no Wayland** - sem prompts de permissão
 
 ## ✨ Novas Funcionalidades
 
@@ -204,13 +203,11 @@ baud_rate: 9600
 
 ### Linux
 1. Baixe `deej-linux` e `config_linux.yaml` da página de [Releases](https://github.com/guizmo-silva/deej-encoder-buttons/releases)
-2. Renomeie `config_linux.yaml` para `config.yaml`
-3. Torne o binário executável: `chmod +x deej-linux`
-4. Instale o xdotool: `sudo apt install xdotool` (Debian/Ubuntu) ou `sudo dnf install xdotool` (Fedora)
-5. Edite `config.yaml` com sua porta serial (geralmente `/dev/ttyUSB0` ou `/dev/ttyACM0`)
-6. Execute `./deej-linux`
+2. Torne o binário executável: `chmod +x deej-linux`
+3. Instale o playerctl: `sudo apt install playerctl` (Debian/Ubuntu) ou `sudo dnf install playerctl` (Fedora)
+4. Edite `config.yaml` com sua porta serial (geralmente `/dev/ttyUSB0` ou `/dev/ttyACM0`)
+5. Execute `./deej-linux`
 
-**Usuários Linux com Wayland:** Se receber uma solicitação de permissão ao pressionar um botão pela primeira vez após cada reinicialização, considere mudar para uma sessão X11/Xorg para operação sem interrupções.
 
 ## ⚠️ IMPORTANTE - Problemas com Arduino não reconhecido
 
