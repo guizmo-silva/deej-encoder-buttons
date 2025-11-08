@@ -48,10 +48,10 @@ void readEncoder1() {
 
   if (currentCLK != enc1LastCLK && currentCLK == LOW) {
     if (digitalRead(ENC1_DT) != currentCLK) {
-      enc1Pos += 20;
+      enc1Pos += 10;
       if (enc1Pos > 1023) enc1Pos = 1023;
     } else {
-      enc1Pos -= 20;
+      enc1Pos -= 10;
       if (enc1Pos < 0) enc1Pos = 0;
     }
   }
@@ -60,13 +60,13 @@ void readEncoder1() {
 
 void readEncoder2() {
   int currentCLK = digitalRead(ENC2_CLK);
-  
+
   if (currentCLK != enc2LastCLK && currentCLK == LOW) {
     if (digitalRead(ENC2_DT) != currentCLK) {
-      enc2Pos += 20;
+      enc2Pos += 10;
       if (enc2Pos > 1023) enc2Pos = 1023;
     } else {
-      enc2Pos -= 20;
+      enc2Pos -= 10;
       if (enc2Pos < 0) enc2Pos = 0;
     }
   }
@@ -75,13 +75,13 @@ void readEncoder2() {
 
 void readEncoder3() {
   int currentCLK = digitalRead(ENC3_CLK);
-  
+
   if (currentCLK != enc3LastCLK && currentCLK == LOW) {
     if (digitalRead(ENC3_DT) != currentCLK) {
-      enc3Pos += 20;
+      enc3Pos += 10;
       if (enc3Pos > 1023) enc3Pos = 1023;
     } else {
-      enc3Pos -= 20;
+      enc3Pos -= 10;
       if (enc3Pos < 0) enc3Pos = 0;
     }
   }
@@ -90,13 +90,13 @@ void readEncoder3() {
 
 void readEncoder4() {
   int currentCLK = digitalRead(ENC4_CLK);
-  
+
   if (currentCLK != enc4LastCLK && currentCLK == LOW) {
     if (digitalRead(ENC4_DT) != currentCLK) {
-      enc4Pos += 20;
+      enc4Pos += 10;
       if (enc4Pos > 1023) enc4Pos = 1023;
     } else {
-      enc4Pos -= 20;
+      enc4Pos -= 10;
       if (enc4Pos < 0) enc4Pos = 0;
     }
   }

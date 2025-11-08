@@ -170,15 +170,41 @@ func (s *masterSession) SetVolume(v float32) error {
 		return errRefreshSessions
 	}
 
-	if err := s.volume.SetMasterVolumeLevelScalar(v, s.eventCtx); err != nil {
-		s.logger.Warnw("Failed to set session volume",
-			"error", err,
-			"volume", v)
+	// Obter volume atual para calcular a diferença
+	currentVolume := s.GetVolume()
 
-		return fmt.Errorf("adjust session volume: %w", err)
+	// Calcular diferença de volume (em escala 0.0 - 1.0)
+	volumeDiff := v - currentVolume
+
+	// Cada tecla de volume ajusta aproximadamente 2% (0.02)
+	const volumeStepSize = 0.02
+
+	// Calcular quantas teclas precisamos enviar
+	stepsNeeded := int(volumeDiff / volumeStepSize)
+
+	if stepsNeeded > 0 {
+		// Volume aumentando - enviar VK_VOLUME_UP
+		s.logger.Debugw("Increasing volume with OSD",
+			"from", fmt.Sprintf("%.2f", currentVolume),
+			"to", fmt.Sprintf("%.2f", v),
+			"steps", stepsNeeded)
+
+		for i := 0; i < stepsNeeded; i++ {
+			sendVolumeKey(VK_VOLUME_UP)
+		}
+	} else if stepsNeeded < 0 {
+		// Volume diminuindo - enviar VK_VOLUME_DOWN
+		stepsNeeded = -stepsNeeded // Tornar positivo
+
+		s.logger.Debugw("Decreasing volume with OSD",
+			"from", fmt.Sprintf("%.2f", currentVolume),
+			"to", fmt.Sprintf("%.2f", v),
+			"steps", stepsNeeded)
+
+		for i := 0; i < stepsNeeded; i++ {
+			sendVolumeKey(VK_VOLUME_DOWN)
+		}
 	}
-
-	s.logger.Debugw("Adjusting session volume", "to", fmt.Sprintf("%.2f", v))
 
 	return nil
 }
